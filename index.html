@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <center>
+      <h1>Appointement Booking App</h1>
+      <div class="book-box">
+        <form onsubmit="saveToLocalStorage">
+          <h2>Enter the details</h2>
+          <label>Name&nbsp;</label>
+          <input
+            id="username"
+            type="text"
+            name="username"
+            required
+          /><br /><br />
+          <label>EmailId </label>
+          <input id="email" type="email" name="emailId" required /><br />
+          <br />
+          <label>PhoneNo.</label>
+          <input
+            id="phonenumber"
+            type="tel"
+            name="phonenumber"
+            required
+          /><br />
+          <br />
+          <button>Submit</button>
+        </form>
+      </div>
+      <br />
+      <div class="result-box">
+        <u><h1>SAVED DATA</h1></u>
+        <ul id="listOfUsers"></ul>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+      <script>
+        function saveToLocalStorage(event) {
+          event.preventDefault();
+          const name = event.target.username.value;
+          const email = event.target.email.value;
+          const phonenumber = event.target.phonenumber.value;
+          const obj = {
+            name,
+            email,
+            phonenumber,
+          };
+          // localStorage.setItem(obj.email,JSON.stringify(obj))
+          axios
+            .post(
+              "https://crudcrud.com/api/6ca82d3324964152a4650a74d09b2a2f/appointmentsdata",
+              obj
+            )
+            .then((res) => {
+              showUserOnScreen(res.data);
+              console.log(res);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+          window.addEventListener("DOMContentLoaded", () => {
+            axios
+              .get(
+                "https://crudcrud.com/api/6ca82d3324964152a4650a74d09b2a2f/appointmentsdata"
+              )
+              .then((res) => {
+                console.log(res);
+
+                for (var i = 0; i < res.data.length; i++) {
+                  showUserOnScreen(res.data[i]);
+                }
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+        }
+
+        function showUserOnScreen(obj) {
+          var parentElem = document.getElementById("users");
+          var childEle = document.createElement("li");
+
+          // var childEle = document.createElement('li')
+          // childElem.textContent = obj.name + ' - ' + obj.email + '-' + obj.number;
+          // parentElem.appendChild(childEle);
+
+          //parentElem.innerHTML = parentElem.innerHTML + `<li> ${obj.name} - ${obj.email} - ${obj.number}<li>`;
+          childEle.textContent = obj.name + "-" + obj.email + "-" + obj.number;
+
+          var delBtn = document.createElement("input");
+          delBtn.type = "button";
+          delBtn.value = "Delete";
+          delBtn.onclick = () => {
+            localStorage.removeItem(obj.email);
+            parentElem.removeChild(childEle);
+          };
+          childEle.appendChild(delBtn);
+          parentElem.appendChild(childEle);
+
+          var editBtn = document.createElement("input");
+          editBtn.type = "button";
+          editBtn.value = "edit";
+          editBtn.onclick = () => {
+            document.getElementById("name").value = obj.name;
+            document.getElementById("email").value = obj.email;
+            document.getElementById("number").value = obj.number;
+            localStorage.removeItem(obj.email);
+            parentElem.removeChild(childEle);
+          };
+          childEle.appendChild(editBtn);
+          parentElem.appendChild(childEle);
+        }
+      </script>
+    </center>
+  </body>
+</html>
