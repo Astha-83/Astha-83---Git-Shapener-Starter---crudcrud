@@ -115,6 +115,20 @@
           };
           childEle.appendChild(editBtn);
           parentElem.appendChild(childEle);
+
+          var updateBtn = document.createElement("input");
+          updateBtn.type = "button";
+          updateBtn.value = "update";
+          updateBtn.onclick = () => {
+            document.getElementById("name").value = obj.name;
+            document.getElementById("email").value = obj.email;
+            document.getElementById("number").value = obj.number;
+            localStorage.removeItem(obj.email);
+            parentElem.removeChild(childEle);
+          };
+          childEle.appendChild(updateBtn);
+          parentElem.appendChild(childEle);
+          
         }
       </script>
     </center>
