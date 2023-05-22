@@ -69,8 +69,8 @@
               .get(
                 "https://crudcrud.com/api/6ca82d3324964152a4650a74d09b2a2f/appointmentsdata"
               )
-              .then((res) => {
-                console.log(res);
+              .then((response) => {
+                console.log(response);
 
                 for (var i = 0; i < res.data.length; i++) {
                   showUserOnScreen(res.data[i]);
@@ -107,11 +107,11 @@
           editBtn.type = "button";
           editBtn.value = "edit";
           editBtn.onclick = () => {
-            document.getElementById("name").value = obj.name;
-            document.getElementById("email").value = obj.email;
-            document.getElementById("number").value = obj.number;
-            localStorage.removeItem(obj.email);
-            parentElem.removeChild(childEle);
+            // document.getElementById("name").value = obj.name;
+            // document.getElementById("email").value = obj.email;
+            // document.getElementById("number").value = obj.number;
+            // localStorage.removeItem(obj.email);
+            // parentElem.removeChild(childEle);
           };
           childEle.appendChild(editBtn);
           parentElem.appendChild(childEle);
