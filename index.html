@@ -107,11 +107,11 @@
           editBtn.type = "button";
           editBtn.value = "edit";
           editBtn.onclick = () => {
-            // document.getElementById("name").value = obj.name;
-            // document.getElementById("email").value = obj.email;
-            // document.getElementById("number").value = obj.number;
-            // localStorage.removeItem(obj.email);
-            // parentElem.removeChild(childEle);
+            document.getElementById("name").value = obj.name;
+            document.getElementById("email").value = obj.email;
+            document.getElementById("number").value = obj.number;
+            localStorage.removeItem(obj.email);
+            parentElem.removeChild(childEle);
           };
           childEle.appendChild(editBtn);
           parentElem.appendChild(childEle);
